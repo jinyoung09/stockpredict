@@ -29,7 +29,9 @@ def DataUpdate_F(df_data, columns):
 
     if df_data.empty:
         df_data = pd.DataFrame(columns=columns)
-    df_data = df_data.append(pd.Series(new_data, index=columns), ignore_index=True)
+    # df_data = df_data.append(pd.Series(new_data, index=columns), ignore_index=True)
+    df_data = pd.concat([df_data, pd.DataFrame([new_data], columns=columns)], ignore_index=True)
+
     return df_data
 
 #전일데이터 불러오기

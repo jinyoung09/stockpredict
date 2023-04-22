@@ -27,10 +27,3 @@ date,code,name,predict_v,prev_v,predict,predict_rate,actual,actual_rate,Time
 2023-04-21,036460,Korea Gas Corporation,28761.29,28770.29,하락,0.03,상승,0.9,am9
 2023-04-21,001230,Dongkuk Steel Mill Company Limited,14301.96,17569.32,하락,18.6,하락,-2.07,am9
 2023-04-21,010620,"Hyundai Mipo Dockyard Co., Ltd.",71206.0,70832.0,상승,0.53,하락,-1.07,am9
-2023-04-22,010950,S-Oil Corporation,80636.72,80636.72,보합,,,,am9
-2023-04-22,103140,Poongsan Corporation,39564.69,39564.69,보합,,,,am9
-2023-04-22,001450,"Hyundai Marine & Fire Insurance Co., Ltd.",34695.33,34695.33,보합,,,,am9
-2023-04-22,005300,"Lotte Chilsung Beverage Co., Ltd.",158466.64,158466.64,보합,,,,am9
-2023-04-22,036460,Korea Gas Corporation,27147.88,27147.88,보합,,,,am9
-2023-04-22,001230,Dongkuk Steel Mill Company Limited,13049.35,13049.35,보합,,,,am9
-2023-04-22,010620,"Hyundai Mipo Dockyard Co., Ltd.",73930.03,73930.03,보합,,,,am9

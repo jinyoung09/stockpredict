@@ -1,5 +1,5 @@
 #temp
-#import streamlit as st
+import streamlit as st
 import pandas as pd
 import numpy as np
 import yfinance as yf
@@ -20,7 +20,17 @@ today_date = dt.datetime.now(tz).strftime('%Y-%m-%d')
 yesterday_date = dt.datetime.now(tz) - dt.timedelta(days=1)
 yesterday_date = yesterday_date.strftime('%Y-%m-%d')
 
-df_data = pd.read_csv('data.csv')
-#df_data = df_data.drop(df_data.index[-1])
-df_data.to_csv('data.csv', index=False)
-print(df_data)
+# df_data = pd.read_csv('data.csv')
+# df_data = df_data.drop(df_data.index[-1])
+# df_data.to_csv('data.csv', index=False)
+# print(df_data)
+
+# df_predict = pd.read_csv('predict.csv', dtype={'code': str})
+# df_predict = df_predict[df_predict['date'] != "2023-04-22"]
+# df_predict.to_csv('predict.csv', index=False)
+# df_predict_show = df_predict.drop(['predict_v','prev_v', 'Time'], axis=1)
+# # df_predict_show = df_predict_show[df_predict_show['date'] == today_date]
+
+st.dataframe(df_predict_show, use_container_width=False)
+
+
