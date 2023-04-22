@@ -1,4 +1,4 @@
-#모델 업데이트
+#모델 업데이트0422
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
