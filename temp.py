@@ -29,7 +29,7 @@ yesterday_date = yesterday_date.strftime('%Y-%m-%d')
 # df_predict = df_predict[df_predict['date'] != "2023-04-22"]
 # df_predict.to_csv('predict.csv', index=False)
 # df_predict_show = df_predict.drop(['predict_v','prev_v', 'Time'], axis=1)
-# # df_predict_show = df_predict_show[df_predict_show['date'] == today_date]
+# df_predict_show = df_predict_show[df_predict_show['date'] == today_date]
 
 st.dataframe(df_predict_show, use_container_width=False)
 

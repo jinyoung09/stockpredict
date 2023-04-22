@@ -25,9 +25,28 @@ df_data = pd.read_csv('data.csv')
 st.title('Stock Predict')
 #st.header('오늘의 주식 예측')
 st.subheader('오늘의 주요 지수')
+#코스피지수, 코스닥지수, S&P500 지수 보여주기기
+# KOSPI 지수 가져오기
+kospi= fdr.DataReader('KS11')
+kospi_v = kospi['Close'].tail(1)
+kospi_change = kospi['Close'].pct_change().tail(1) * 100
+#코스닥 지수 가져오기
+kosdaq= fdr.DataReader('KQ11')
+kosdaq_v = kosdaq['Close'].tail(1)
+kosdaq_change = kosdaq['Close'].pct_change().tail(1) * 100
+#S&P500 지수 가져오기
+sp= fdr.DataReader('KQ11')
+sp_v = sp['Close'].tail(1)
+sp_change = sp['Close'].pct_change().tail(1) * 100
+#화면표시
+kospi, kosdaq, sp = st.columns(3)
+kospi.metric("KOSPI", round(kospi_v.values[0],2), round(kospi_change.values[0],2))
+kosdaq.metric("KOSDAQ",  round(kosdaq_v.values[0],2), round(kosdaq_change.values[0],2))
+sp.metric("S&P500", round(sp_v.values[0],2), round(sp_change.values[0],2))
+
 st.write("오늘의 주요 지수 정보들을 보여줍니다")
 
-if st.button("오늘의 주요지수 Update 및 예측(am9)"):
+if st.button("오늘의 주요지수 Update 및 예측(am9)(관리자Only)"):
     x_data = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
     prev_data = am9.Prevdata(df_data)
     prev_X = pd.DataFrame([prev_data], columns=x_data)

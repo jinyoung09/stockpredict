@@ -30,7 +30,7 @@ date = st.date_input(
 end_date = date.strftime('%Y-%m-%d')
 
 
-if st.button("모델을 업데이트"):
+if st.button("모델 업데이트(관리자 Only)"):
     st.write("모델을 업데이트 하는 중입니다")
     def get_company_name(ticker):
         stock_name = []
