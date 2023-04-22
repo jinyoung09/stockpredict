@@ -10,7 +10,7 @@ import pytz
 import altair as alt
 import am9
 import pm4
-import model_update
+# import model_update
 
 Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']
 #S-oil,풍산,현대해상,롯데칠성,한국가스공사,동국제강,현대미포조선

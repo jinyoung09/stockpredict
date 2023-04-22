@@ -1,7 +1,6 @@
 #모델 업데이트
 import streamlit as st
 import pandas as pd
-import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV, cross_val_score
 import numpy as np

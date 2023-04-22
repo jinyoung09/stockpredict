@@ -14,7 +14,7 @@ Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']
 Model_list = ['RandomForestRegressor_Soil.joblib','RandomForestRegressor_Poongsan.joblib','RandomForestRegressor_hyundae_marine.joblib', 'RandomForestRegressor_Lotte7.joblib', 'RandomForestRegressor_Koreagas.joblib','RandomForestRegressor_Dongkuk.joblib','RandomForestRegressor_hyundae_Mipo.joblib']
 df_predict = pd.read_csv('predict.csv', dtype={'code': str})
 df_data = pd.read_csv('data.csv')
-#tz = pytz.timezone('Asia/Seoul')  # 한국 시간대
+tz = pytz.timezone('Asia/Seoul')  # 한국 시간대
 
 #오후에 Data 업데이트 하기기
 def DataUpdate_S(df_data, columns):
