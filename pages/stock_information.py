@@ -1,8 +1,9 @@
 import streamlit as st
 import FinanceDataReader as fdr
 import datetime as dt
+import requests
 
-st.title('종목 차트 검색')
+st.title('종목 차트 검색\U0001F607')
 Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']
 stock_list = ['S-oil','풍산','현대해상','롯데칠성','한국가스공사','동국제강','현대미포조선']
 with st.sidebar:
@@ -43,4 +44,3 @@ if code and date:
 
     with tab2:
         st.dataframe(df.sort_index(ascending=False))
-

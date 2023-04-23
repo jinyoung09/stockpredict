@@ -22,8 +22,8 @@ yesterday_date = yesterday_date.strftime('%Y-%m-%d')
 
 df_data = pd.read_csv('data.csv')
 
-st.title('Stock Predict')
-#st.header('오늘의 주식 예측')
+st.title('Stock Predict\U0001F4C8')
+#st.header('해당 예측결과는 ')
 st.subheader('오늘의 주요 지수')
 #코스피지수, 코스닥지수, S&P500 지수 보여주기기
 # KOSPI 지수 가져오기
@@ -44,9 +44,9 @@ kospi.metric("KOSPI", round(kospi_v.values[0],2), round(kospi_change.values[0],2
 kosdaq.metric("KOSDAQ",  round(kosdaq_v.values[0],2), round(kosdaq_change.values[0],2))
 sp.metric("S&P500", round(sp_v.values[0],2), round(sp_change.values[0],2))
 
-st.write("오늘의 주요 지수 정보들을 보여줍니다")
+st.write("오늘의 주요 정보(\U0001F4B1\U0001F697\U0001F947\U0001F949\U0001F4C9\U0001F4B2)들을 보여줍니다")
 
-if st.button("오늘의 주요지수 Update 및 예측(am9)(관리자Only)"):
+if st.button("오늘의 정보 Update 및 예측(am9)(관리자Only)"):
     x_data = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
     prev_data = am9.Prevdata(df_data)
     prev_X = pd.DataFrame([prev_data], columns=x_data)
@@ -68,6 +68,7 @@ df_data_show = df_data[df_data['Date'] == yesterday_date]
 st.table(df_data_show)
 st.subheader('오늘의 주식예측')
 st.write("주식의 상승/하락을 예측합니다")
+st.markdown("**:red[\U0001F645\U0001F645\U0001F645예측결과는 참고자료이고, 주식투자에 대한 책임은 본인에게 있습니다 :)]**")
 df_predict = pd.read_csv('predict.csv', dtype={'code': str})
 df_predict_show = df_predict.drop(['predict_v','prev_v', 'Time'], axis=1)
 df_predict_show = df_predict_show[df_predict_show['date'] == today_date]
@@ -117,3 +118,22 @@ chart = alt.Chart(chart_data).mark_line().encode(
     y=alt.Y(selected_column, scale=alt.Scale(zero=False))
 ).interactive()
 st.altair_chart(chart,use_container_width=True)
+
+st.subheader('예측결과')
+st.write("어제",yesterday_date,"의 예측결과 입니다")
+# st.write(yesterday_date)
+df_predict_yesterday = pd.read_csv('predict.csv', dtype={'code': str})
+df_predict_yesterday = df_predict_yesterday[df_predict['date'] == yesterday_date]
+df_predict_show = df_predict_yesterday.drop(['predict_v','prev_v', 'Time'], axis=1)
+st.dataframe(df_predict_show, use_container_width=False)
+
+#예측결과 구하기
+# 'predict' 컬럼이 '상승'인 행 필터링
+filter_rising = df_predict_yesterday['predict'] == '상승'
+df_rising = df_predict_yesterday[filter_rising]
+
+# 'actual predict' 컬럼의 평균 계산
+mean_actual_predict_rising = df_rising['actual_rate'].mean()
+
+st.write('KOSPI는', round(kospi_change.values[0],2))
+st.write('당신이 이 예측결과대로 투자했다면 평균', round(mean_actual_predict_rising,2))
