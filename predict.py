@@ -46,19 +46,19 @@ sp.metric("S&P500", round(sp_v.values[0],2), round(sp_change.values[0],2))
 
 st.write("오늘의 주요 정보(\U0001F4B1\U0001F697\U0001F947\U0001F949\U0001F4C9\U0001F4B2)들을 보여줍니다")
 
-if st.button("오늘의 정보 Update 및 예측(am9)(관리자Only)"):
-    x_data = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
-    prev_data = am9.Prevdata(df_data)
-    prev_X = pd.DataFrame([prev_data], columns=x_data)
-    columns = ['Date','Time','Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
-    df_data = am9.DataUpdate_F(df_data, columns)
-    df_data.to_csv('data.csv', index=False)
+# if st.button("오늘의 정보 Update 및 예측(am9)(관리자Only)"):
+#     x_data = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
+#     prev_data = am9.Prevdata(df_data)
+#     prev_X = pd.DataFrame([prev_data], columns=x_data)
+#     columns = ['Date','Time','Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
+#     df_data = am9.DataUpdate_F(df_data, columns)
+#     df_data.to_csv('data.csv', index=False)
 
-    new_data = am9.Newdata(df_data)
-    new_X = pd.DataFrame([new_data], columns=x_data)
+#     new_data = am9.Newdata(df_data)
+#     new_X = pd.DataFrame([new_data], columns=x_data)
 
-    df_predict = am9.Predict(prev_X,new_X)
-    df_predict.to_csv('predict.csv', index=False)
+#     df_predict = am9.Predict(prev_X,new_X)
+#     df_predict.to_csv('predict.csv', index=False)
 
 df_data_show = df_data[df_data['Date'] == today_date]
 st.table(df_data_show)
@@ -75,18 +75,18 @@ df_predict_show = df_predict_show[df_predict_show['date'] == today_date]
 
 st.dataframe(df_predict_show, use_container_width=False)
 
-if st.button("오늘의 주요지수 Update 및 주식 예측결과(pm4)"):
-     #pm4 원자재 data 업데이트하기
-    columns = ['Date','Time','Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
-    x_data = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
+# if st.button("오늘의 주요지수 Update 및 주식 예측결과(pm4)"):
+#      #pm4 원자재 data 업데이트하기
+#     columns = ['Date','Time','Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
+#     x_data = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
 
-    df_data = pm4.DataUpdate_S(df_data, columns)
-    df_data.to_csv('data.csv', index=False)
+#     df_data = pm4.DataUpdate_S(df_data, columns)
+#     df_data.to_csv('data.csv', index=False)
 
-    #pm4 Actual data 기록하기
-    df_predict = pd.read_csv('predict.csv', dtype={'code': str})
-    df_predict = pm4.ActualDataInput(df_predict)
-    df_predict.to_csv('predict.csv', index=False)
+#     #pm4 Actual data 기록하기
+#     df_predict = pd.read_csv('predict.csv', dtype={'code': str})
+#     df_predict = pm4.ActualDataInput(df_predict)
+#     df_predict.to_csv('predict.csv', index=False)
 
 st.subheader('History')
 if st.button("주요지수 History"):
