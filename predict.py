@@ -126,7 +126,18 @@ st.write("어제",yesterday_date,"의 예측결과 입니다")
 df_predict_yesterday = pd.read_csv('predict.csv', dtype={'code': str})
 df_predict_yesterday = df_predict_yesterday[df_predict['date'] == yesterday_date]
 df_predict_show = df_predict_yesterday.drop(['predict_v','prev_v', 'Time'], axis=1)
-st.dataframe(df_predict_show, use_container_width=False)
+#st.dataframe(df_predict_show, use_container_width=False)
+def highlight(row):
+    if row['actual'] == row['predict']:
+        return ['background-color: yellow'] * len(row)
+    else:
+        return [''] * len(row)
+
+# 스타일 적용
+styled_df = df_predict_show.style.apply(highlight, axis=1)
+st.subheader('예측결과')
+st.write("어제",yesterday_date,"의 예측결과 입니다")
+st.dataframe(styled_df, use_container_width=False)
 
 #예측결과 구하기
 # 'predict' 컬럼이 '상승'인 행 필터링
