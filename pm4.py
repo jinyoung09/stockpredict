@@ -28,7 +28,9 @@ def DataUpdate_S(df_data, columns):
 
     if df_data.empty:
         df_data = pd.DataFrame(columns=columns)
-    df_data = df_data.append(pd.Series(new_data, index=columns), ignore_index=True)
+    #df_data = df_data.append(pd.Series(new_data, index=columns), ignore_index=True)
+    new_row = pd.DataFrame([new_data], columns=columns)
+    df_data = pd.concat([df_data, new_row], ignore_index=True)
     return df_data
 
 #Actual data 기록하기
