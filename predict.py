@@ -10,6 +10,7 @@ import pytz
 import altair as alt
 import am9
 import pm4
+import math
 # import model_update
 
 Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']
@@ -134,6 +135,8 @@ df_rising = df_predict_yesterday[filter_rising]
 
 # 'actual predict' 컬럼의 평균 계산
 mean_actual_predict_rising = df_rising['actual_rate'].mean()
+if math.isnan(mean_actual_predict_rising):
+    mean_actual_predict_rising = 0.0
 
 kospi= fdr.DataReader('KS11')
 kospi_change_prevday = kospi['Close'].pct_change().iloc[-2] * 100
