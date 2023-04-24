@@ -135,5 +135,8 @@ df_rising = df_predict_yesterday[filter_rising]
 # 'actual predict' 컬럼의 평균 계산
 mean_actual_predict_rising = df_rising['actual_rate'].mean()
 
-st.write('KOSPI는', round(kospi_change.values[0],2))
+kospi= fdr.DataReader('KS11')
+kospi_change_prevday = kospi['Close'].pct_change().iloc[-2] * 100
+
+st.write('KOSPI는', round(float(kospi_change_prevday),2))
 st.write('당신이 이 예측결과대로 투자했다면 평균', round(mean_actual_predict_rising,2))
