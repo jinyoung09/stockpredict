@@ -9,7 +9,7 @@ import FinanceDataReader as fdr
 from pandas._libs.tslibs.timestamps import Timestamp
 import pytz
 #import altair as alt
-# import am9
+# import am9st
 # import pm4
 
 Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']

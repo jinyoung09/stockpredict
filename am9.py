@@ -40,7 +40,7 @@ def Prevdata(df_data):
     prev_data = []
     column_list = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
     for index, row in df_data[::-1].iterrows():
-        if row['Date'] == yesterday:
+        if row['Date'] == yesterday and row['Time'] == 'pm4':
             for column in column_list:
                 prev_data.append(row[column])
     print(yesterday,prev_data)
@@ -52,7 +52,7 @@ def Newdata(df_data):
     new_data = []
     column_list = ['Close_exchange', 'Close_oil', 'Close_gold', 'Close_copper', 'Close_nasdaq', 'Close_dow', 'Close_vix','Close_treasury','Close_gas']
     for index, row in df_data[::-1].iterrows():
-        if row['Date'] == today:
+        if row['Date'] == today and row['Time'] == 'am9':
             for column in column_list:
                 new_data.append(row[column])
     print(today,new_data)
