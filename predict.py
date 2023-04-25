@@ -128,8 +128,8 @@ chart = alt.Chart(chart_data).mark_line().encode(
 ).interactive()
 st.altair_chart(chart,use_container_width=True)
 
-st.subheader('예측결과')
-st.write("어제",yesterday_date,"의 예측결과 입니다")
+# st.subheader('예측결과')
+# st.write("어제",yesterday_date,"의 예측결과 입니다")
 # st.write(yesterday_date)
 df_predict_yesterday = pd.read_csv('predict.csv', dtype={'code': str})
 df_predict_yesterday = df_predict_yesterday[df_predict['date'] == yesterday_date]
