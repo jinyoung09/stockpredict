@@ -18,7 +18,7 @@ Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']
 Model_list = ['RandomForestRegressor_Soil.joblib','RandomForestRegressor_Poongsan.joblib','RandomForestRegressor_hyundae_marine.joblib', 'RandomForestRegressor_Lotte7.joblib', 'RandomForestRegressor_Koreagas.joblib','RandomForestRegressor_Dongkuk.joblib','RandomForestRegressor_hyundae_Mipo.joblib'  ]
 tz = pytz.timezone('Asia/Seoul')  # 한국 시간대
 today_date = dt.datetime.now(tz).strftime('%Y-%m-%d')
-yesterday_date = dt.datetime.now(tz) - dt.timedelta(days=1)
+yesterday_date= dt.datetime.now(tz) - dt.timedelta(days=1)
 yesterday_date = yesterday_date.strftime('%Y-%m-%d')
 
 df_data = pd.read_csv('data.csv')
@@ -29,21 +29,29 @@ st.subheader('오늘의 주요 지수')
 #코스피지수, 코스닥지수, S&P500 지수 보여주기기
 # KOSPI 지수 가져오기
 kospi= fdr.DataReader('KS11')
-kospi_v = kospi['Close'].tail(1)
-kospi_change = kospi['Close'].pct_change().tail(1) * 100
+kospi_v = kospi['Close'].iloc[-1]
+yesterday_kospi = kospi['Close'].iloc[-2]
+kospi_change = (kospi_v - yesterday_kospi) / yesterday_kospi * 100
+#kospi_change = kospi['Close'].pct_change().loc[yesterday_date] * 100
+
 #코스닥 지수 가져오기
 kosdaq= fdr.DataReader('KQ11')
-kosdaq_v = kosdaq['Close'].tail(1)
-kosdaq_change = kosdaq['Close'].pct_change().tail(1) * 100
+#kosdaq_v = kosdaq['Close'].tail(1)
+kosdaq_v = kosdaq['Close'].iloc[-1]
+yesterday_kosdaq = kosdaq['Close'].iloc[-2]
+kosdaq_change = (kosdaq_v - yesterday_kosdaq) / yesterday_kosdaq * 100
+# kosdaq_change = kosdaq['Close'].pct_change().loc[yesterday_date]  * 100
 #S&P500 지수 가져오기
-sp= fdr.DataReader('KQ11')
-sp_v = sp['Close'].tail(1)
-sp_change = sp['Close'].pct_change().tail(1) * 100
+sp= fdr.DataReader('US500')
+sp_v = sp['Close'].iloc[-1]
+yesterday_sp = sp['Close'].iloc[-2]
+sp_change = (sp_v - yesterday_sp) / yesterday_sp * 100
 #화면표시
 kospi, kosdaq, sp = st.columns(3)
-kospi.metric("KOSPI", round(kospi_v.values[0],2), round(kospi_change.values[0],2))
-kosdaq.metric("KOSDAQ",  round(kosdaq_v.values[0],2), round(kosdaq_change.values[0],2))
-sp.metric("S&P500", round(sp_v.values[0],2), round(sp_change.values[0],2))
+#kospi.metric("KOSPI", round(kospi_v.values[0],2), round(kospi_change.values[0],2))
+kospi.metric("KOSPI", round(kospi_v,2), round(kospi_change,2))
+kosdaq.metric("KOSDAQ",  round(kosdaq_v,2), round(kosdaq_change,2))
+sp.metric("S&P500", round(sp_v,2), round(sp_change,2))
 
 st.write("오늘의 주요 정보(\U0001F4B1\U0001F697\U0001F947\U0001F949\U0001F4C9\U0001F4B2)들을 보여줍니다")
 
@@ -149,8 +157,30 @@ mean_actual_predict_rising = df_rising['actual_rate'].mean()
 if math.isnan(mean_actual_predict_rising):
     mean_actual_predict_rising = 0.0
 
-kospi= fdr.DataReader('KS11')
-kospi_change_prevday = kospi['Close'].pct_change().iloc[-2] * 100
+# kospi= fdr.DataReader('KS11')
+# kospi_change_prevday = kospi['Close'].pct_change().iloc[-2] * 100
 
-st.write('KOSPI는', round(float(kospi_change_prevday),2))
+# st.write('KOSPI는', round(float(kospi_change_prevday),2))
+# KOSPI 지수 가져오기
+# kospi = fdr.DataReader('KS11')
+
+# # 전일 대비 등락률 계산하기
+# kospi_change_prevday = ((kospi['Close'].iloc[-2] - kospi['Open'].iloc[-2]) / kospi['Open'].iloc[-2]) * 100
+# print("Close, Open", kospi['Close'].iloc[-2], kospi['Open'].iloc[-2],kospi['Low'].iloc[-2])
+
+kospi = yf.Ticker('^KS11')
+# 어제 날짜 구하기
+today = dt.date.today()
+yesterday = today - dt.timedelta(days=1)
+
+# history() 메서드를 사용하여 데이터 가져오기
+try:
+    data = kospi.history(yesterday_date)
+except IndexError:
+    data = kospi.history(period="max-1d").tail(1)
+
+# Open가 대비해서 Close의 등락률 계산
+pct_change = (data['Close'][0] - data['Open'][0]) / data['Open'][0] * 100
+st.write('KOSPI는', round(float(pct_change), 2))
+
 st.write('당신이 이 예측결과대로 투자했다면 평균', round(mean_actual_predict_rising,2))
