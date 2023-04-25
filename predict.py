@@ -18,8 +18,8 @@ Ticker_list = ['010950','103140','001450','005300','036460','001230','010620']
 Model_list = ['RandomForestRegressor_Soil.joblib','RandomForestRegressor_Poongsan.joblib','RandomForestRegressor_hyundae_marine.joblib', 'RandomForestRegressor_Lotte7.joblib', 'RandomForestRegressor_Koreagas.joblib','RandomForestRegressor_Dongkuk.joblib','RandomForestRegressor_hyundae_Mipo.joblib'  ]
 tz = pytz.timezone('Asia/Seoul')  # 한국 시간대
 today_date = dt.datetime.now(tz).strftime('%Y-%m-%d')
-yesterday_date= dt.datetime.now(tz) - dt.timedelta(days=1)
-yesterday_date = yesterday_date.strftime('%Y-%m-%d')
+yesterday_date = (dt.datetime.now(tz) - dt.timedelta(days=1)).strftime('%Y-%m-%d')
+
 
 df_data = pd.read_csv('data.csv')
 
@@ -168,19 +168,25 @@ if math.isnan(mean_actual_predict_rising):
 # kospi_change_prevday = ((kospi['Close'].iloc[-2] - kospi['Open'].iloc[-2]) / kospi['Open'].iloc[-2]) * 100
 # print("Close, Open", kospi['Close'].iloc[-2], kospi['Open'].iloc[-2],kospi['Low'].iloc[-2])
 
-kospi = yf.Ticker('^KS11')
-# 어제 날짜 구하기
-today = dt.date.today()
-yesterday = today - dt.timedelta(days=1)
+# kospi = yf.Ticker('^KS11')
+# # 어제 날짜 구하기
+# today_date = dt.datetime.now(tz).strftime('%Y-%m-%d')
+# yesterday_date = (dt.datetime.now(tz) - dt.timedelta(days=1)).strftime('%Y-%m-%d')
+kospi= fdr.DataReader('KS11')
+# kospi_v = kospi['Close'].iloc[-1]
+yesterday_kospi_open = kospi['Open'].iloc[-2]
+yesterday_kospi_close = kospi['Close'].iloc[-2]
+pct_change_y = (yesterday_kospi_close - yesterday_kospi_open) / yesterday_kospi_open * 100
 
 # history() 메서드를 사용하여 데이터 가져오기
-try:
-    data = kospi.history(yesterday_date)
-except IndexError:
-    data = kospi.history(period="max-1d").tail(1)
+# try:
+#data_y = kospi.history(yesterday_date)
+# except IndexError:
+#     data = kospi.history(period="max-1d").tail(2)
 
 # Open가 대비해서 Close의 등락률 계산
-pct_change = (data['Close'][0] - data['Open'][0]) / data['Open'][0] * 100
-st.write('KOSPI는', round(float(pct_change), 2))
-
+#pct_change_y = (data_y['Close'][0] - data_y['Open'][0]) / data_y['Open'][0] * 100
+st.write('KOSPI는', round(float(pct_change_y), 2))
+print(yesterday_kospi_open,yesterday_kospi_close)
+#print(data_y.index[0], data_y['Close'][0],data_y['Open'][0],yesterday_date,today_date)
 st.write('당신이 이 예측결과대로 투자했다면 평균', round(mean_actual_predict_rising,2))
